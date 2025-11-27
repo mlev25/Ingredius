@@ -1,10 +1,10 @@
 package hu.unideb.inf.ingredius.data.model;
 
+import hu.unideb.inf.ingredius.data.model.util.Categories;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "categories")

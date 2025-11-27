@@ -1,4 +1,4 @@
-package hu.unideb.inf.ingredius.data.model;
+package hu.unideb.inf.ingredius.data.model.util;
 
 public enum Categories {
     GRAINS,

@@ -1,11 +1,11 @@
 package hu.unideb.inf.ingredius.data.model;
 
+import hu.unideb.inf.ingredius.data.model.util.Severities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "allergens")
