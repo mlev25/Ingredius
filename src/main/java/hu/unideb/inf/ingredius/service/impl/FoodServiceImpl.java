@@ -88,5 +88,6 @@ public class FoodServiceImpl implements FoodService {
                 Food updatedFood = foodRepository.save(food);
                 return mapper.toDto(updatedFood);
             });
-        });    }
+        });
+    }
 }
