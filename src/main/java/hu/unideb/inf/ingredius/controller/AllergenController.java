@@ -18,12 +18,14 @@ public class AllergenController {
         this.allergenService = allergenService;
     }
 
+    //GET /api/allergens
     @GetMapping
     public ResponseEntity<List<AllergenDTO>> getAllAllergens() {
         List<AllergenDTO> allergens = allergenService.findAll();
         return ResponseEntity.ok(allergens);
     }
 
+    // POST /api/allergens
     @PostMapping
     public ResponseEntity<AllergenDTO> createAllergen(@Valid @RequestBody AllergenDTO allergenDto) {
         allergenDto.setId(null);
@@ -31,6 +33,7 @@ public class AllergenController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedAllergen);
     }
 
+    // DELETE /api/allergends/id
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAllergen(@PathVariable Long id) {
         if (allergenService.findById(id).isEmpty()) {

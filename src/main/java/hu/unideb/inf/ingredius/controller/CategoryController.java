@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -27,32 +28,36 @@ public class CategoryController {
 
     // POST /api/categories
     @PostMapping
-    public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO categoryDto) {
-        categoryDto.setId(null);
-        CategoryDTO savedCategory = categoryService.save(categoryDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
-    }
-
-    // PUT /api/categories/{id}
-    @PutMapping("/{id}")
-    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryDTO categoryDto) {
-        if (categoryService.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDTO categoryDto) {
+        try {
+            categoryDto.setId(null);
+            CategoryDTO savedCategory = categoryService.save(categoryDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", e.getMessage()));
         }
-
-        categoryDto.setId(id);
-        CategoryDTO updatedCategory = categoryService.save(categoryDto);
-        return ResponseEntity.ok(updatedCategory);
     }
 
-    // DELETE /api/categories/{id}
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
-        if (categoryService.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        categoryService.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
+//    // PUT /api/categories/{id}
+//    @PutMapping("/{id}")
+//    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryDTO categoryDto) {
+//        if (categoryService.findById(id).isEmpty()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//        categoryDto.setId(id);
+//        CategoryDTO updatedCategory = categoryService.save(categoryDto);
+//        return ResponseEntity.ok(updatedCategory);
+//    }
+
+//    // DELETE /api/categories/{id}
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+//        if (categoryService.findById(id).isEmpty()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        categoryService.deleteById(id);
+//        return ResponseEntity.noContent().build();
+//    }
 
 }

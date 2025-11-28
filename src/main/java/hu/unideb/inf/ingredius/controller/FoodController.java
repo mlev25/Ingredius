@@ -18,6 +18,7 @@ public class FoodController {
         this.foodService = foodService;
     }
 
+    //POST /api/foods
     @PostMapping
     public ResponseEntity<FoodDTO> createFood(@Valid @RequestBody FoodDTO foodDto) {
         foodDto.setId(null);
@@ -25,11 +26,13 @@ public class FoodController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedFood);
     }
 
+    // GET /api/foods
     @GetMapping
     public ResponseEntity<List<FoodDTO>> getAllFoods() {
         return ResponseEntity.ok(foodService.findAll());
     }
 
+    // GET /api/foods/id
     @GetMapping("/{id}")
     public ResponseEntity<FoodDTO> getFoodById(@PathVariable Long id) {
         return foodService.findById(id)
@@ -37,6 +40,7 @@ public class FoodController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    // PUT /api/foods/id
     @PutMapping("/{id}")
     public ResponseEntity<FoodDTO> updateFood(@PathVariable Long id, @Valid @RequestBody FoodDTO foodDto) {
         if (foodService.findById(id).isEmpty()) {
@@ -50,6 +54,7 @@ public class FoodController {
         return ResponseEntity.ok(updatedFood);
     }
 
+    // DELETE /api/foods/id
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFood(@PathVariable Long id) {
         if (foodService.findById(id).isEmpty()) {
