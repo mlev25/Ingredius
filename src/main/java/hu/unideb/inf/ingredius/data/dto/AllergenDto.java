@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class AllergenDTO {
+public class AllergenDto {
     private Long id;
 
     @NotBlank(message = "Az allergen nem lehet ures!")

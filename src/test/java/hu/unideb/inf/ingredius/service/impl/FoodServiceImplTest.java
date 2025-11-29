@@ -1,6 +1,6 @@
 package hu.unideb.inf.ingredius.service.impl;
 
-import hu.unideb.inf.ingredius.data.dto.FoodDTO;
+import hu.unideb.inf.ingredius.data.dto.FoodDto;
 import hu.unideb.inf.ingredius.data.model.Allergen;
 import hu.unideb.inf.ingredius.data.model.Category;
 import hu.unideb.inf.ingredius.data.model.Food;
@@ -39,7 +39,7 @@ public class FoodServiceImplTest {
     private Allergen glutenAllergen;
     private Allergen lactoseAllergen;
     private Food inputFoodEntity;
-    private FoodDTO inputFoodDto;
+    private FoodDto inputFoodDto;
     private Set<Long> allergenIds;
     private List<Allergen> allergenList;
     private Set<Allergen> allergenSet;
@@ -59,7 +59,7 @@ public class FoodServiceImplTest {
         allergenSet = new HashSet<>(allergenList);
         allergenIds = new HashSet<>(Arrays.asList(1L, 3L));
 
-        inputFoodDto = new FoodDTO();
+        inputFoodDto = new FoodDto();
         inputFoodDto.setName("Joghurt");
         inputFoodDto.setCategoryId(2L);
         inputFoodDto.setAllergenIds(allergenIds);
@@ -79,12 +79,12 @@ public class FoodServiceImplTest {
         when(allergenRepository.findAllById(allergenIds)).thenReturn(allergenList);
         when(mapper.toEntity(inputFoodDto, dairyCategory, allergenSet)).thenReturn(inputFoodEntity);
         when(foodRepository.save(inputFoodEntity)).thenReturn(inputFoodEntity);
-        FoodDTO expectedDto = new FoodDTO();
+        FoodDto expectedDto = new FoodDto();
         expectedDto.setId(10L);
         when(mapper.toDto(inputFoodEntity)).thenReturn(expectedDto);
 
         // WHEN
-        FoodDTO result = foodService.save(inputFoodDto);
+        FoodDto result = foodService.save(inputFoodDto);
 
         // THEN
         assertNotNull(result);
@@ -107,12 +107,12 @@ public class FoodServiceImplTest {
     void findById_shouldReturnFoodDto_whenFound() {
         // GIVEN
         when(foodRepository.findById(10L)).thenReturn(Optional.of(inputFoodEntity));
-        FoodDTO expectedDto = new FoodDTO();
+        FoodDto expectedDto = new FoodDto();
         expectedDto.setId(10L);
         when(mapper.toDto(inputFoodEntity)).thenReturn(expectedDto);
 
         // WHEN
-        Optional<FoodDTO> result = foodService.findById(10L);
+        Optional<FoodDto> result = foodService.findById(10L);
 
         // THEN
         assertTrue(result.isPresent());
@@ -129,11 +129,11 @@ public class FoodServiceImplTest {
 
         when(foodRepository.findAll()).thenReturn(foodList);
 
-        when(mapper.toDto(food1)).thenReturn(new FoodDTO());
-        when(mapper.toDto(food2)).thenReturn(new FoodDTO());
+        when(mapper.toDto(food1)).thenReturn(new FoodDto());
+        when(mapper.toDto(food2)).thenReturn(new FoodDto());
 
         // WHEN
-        List<FoodDTO> result = foodService.findAll();
+        List<FoodDto> result = foodService.findAll();
 
         // THEN
         assertNotNull(result);
@@ -160,7 +160,7 @@ public class FoodServiceImplTest {
         updatedFood.setName("Régi étel");
         updatedFood.setCategory(newCategory);
 
-        FoodDTO expectedDto = new FoodDTO();
+        FoodDto expectedDto = new FoodDto();
         expectedDto.setId(foodId);
         expectedDto.setCategoryId(newCategoryId);
 
@@ -170,7 +170,7 @@ public class FoodServiceImplTest {
         when(mapper.toDto(updatedFood)).thenReturn(expectedDto);
 
         // WHEN
-        Optional<FoodDTO> result = foodService.updateCategory(foodId, newCategoryId);
+        Optional<FoodDto> result = foodService.updateCategory(foodId, newCategoryId);
 
         // THEN
         assertTrue(result.isPresent());

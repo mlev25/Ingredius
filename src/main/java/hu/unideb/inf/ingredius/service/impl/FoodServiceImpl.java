@@ -1,6 +1,6 @@
 package hu.unideb.inf.ingredius.service.impl;
 
-import hu.unideb.inf.ingredius.data.dto.FoodDTO;
+import hu.unideb.inf.ingredius.data.dto.FoodDto;
 import hu.unideb.inf.ingredius.data.model.Allergen;
 import hu.unideb.inf.ingredius.data.model.Category;
 import hu.unideb.inf.ingredius.data.model.Food;
@@ -12,7 +12,11 @@ import hu.unideb.inf.ingredius.service.mapper.FoodMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,7 +28,8 @@ public class FoodServiceImpl implements FoodService {
     private final AllergenRepository allergenRepository;
     private final FoodMapper mapper;
 
-    public FoodServiceImpl(FoodRepository foodRepository, CategoryRepository categoryRepository, AllergenRepository allergenRepository, FoodMapper foodMapper) {
+    public FoodServiceImpl(FoodRepository foodRepository, CategoryRepository categoryRepository,
+                           AllergenRepository allergenRepository, FoodMapper foodMapper) {
         this.foodRepository = foodRepository;
         this.categoryRepository = categoryRepository;
         this.allergenRepository = allergenRepository;
@@ -32,9 +37,10 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public FoodDTO save(FoodDTO foodDto) {
+    public FoodDto save(FoodDto foodDto) {
         Category category = categoryRepository.findById(foodDto.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Kategoria nem talalhato ezzel az ID-val: " + foodDto.getCategoryId()));
+                .orElseThrow(() ->
+                        new RuntimeException("Kategoria nem talalhato ezzel az ID-val: " + foodDto.getCategoryId()));
 
         Set<Allergen> allergens = foodDto.getAllergenIds() == null || foodDto.getAllergenIds().isEmpty()
                 ? Collections.emptySet()
@@ -49,7 +55,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<FoodDTO> findAll() {
+    public List<FoodDto> findAll() {
         return foodRepository.findAll().stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
@@ -57,8 +63,9 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<FoodDTO> findById(Long id) {
-        return foodRepository.findById(id).map(mapper::toDto);    }
+    public Optional<FoodDto> findById(Long id) {
+        return foodRepository.findById(id).map(mapper::toDto);
+    }
 
     @Override
     public void deleteById(Long id) {
@@ -66,7 +73,7 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Optional<FoodDTO> updateAllergens(Long foodId, Set<Long> allergenIds) {
+    public Optional<FoodDto> updateAllergens(Long foodId, Set<Long> allergenIds) {
         Optional<Food> foodOpt = foodRepository.findById(foodId);
         if (foodOpt.isEmpty()) {
             return Optional.empty();
@@ -81,7 +88,7 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Optional<FoodDTO> updateCategory(Long foodId, Long categoryId) {
+    public Optional<FoodDto> updateCategory(Long foodId, Long categoryId) {
         return foodRepository.findById(foodId).flatMap(food -> {
             return categoryRepository.findById(categoryId).map(category -> {
                 food.setCategory(category);

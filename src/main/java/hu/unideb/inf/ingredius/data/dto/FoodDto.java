@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.Set;
 
 @Data
-public class FoodDTO {
+public class FoodDto {
     private Long id;
 
     @NotBlank(message = "A nev nem lehet ures")
@@ -24,5 +24,5 @@ public class FoodDTO {
 
     private Set<Long> allergenIds;
 
-    private Set<AllergenDTO> allergens;
+    private Set<AllergenDto> allergens;
 }

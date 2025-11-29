@@ -1,18 +1,18 @@
 package hu.unideb.inf.ingredius.service;
 
-import hu.unideb.inf.ingredius.data.dto.AllergenDTO;
+import hu.unideb.inf.ingredius.data.dto.AllergenDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface AllergenService {
-    AllergenDTO save(AllergenDTO allergenDto);
+    AllergenDto save(AllergenDto allergenDto);
 
-    List<AllergenDTO> findAll();
+    List<AllergenDto> findAll();
 
-    Optional<AllergenDTO> findById(Long id);
+    Optional<AllergenDto> findById(Long id);
 
     void deleteById(Long id);
 
-    Optional<AllergenDTO> findByName(String name);
+    Optional<AllergenDto> findByName(String name);
 }

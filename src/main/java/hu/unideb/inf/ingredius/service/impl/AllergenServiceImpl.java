@@ -1,6 +1,6 @@
 package hu.unideb.inf.ingredius.service.impl;
 
-import hu.unideb.inf.ingredius.data.dto.AllergenDTO;
+import hu.unideb.inf.ingredius.data.dto.AllergenDto;
 import hu.unideb.inf.ingredius.data.model.Allergen;
 import hu.unideb.inf.ingredius.data.repository.AllergenRepository;
 import hu.unideb.inf.ingredius.service.AllergenService;
@@ -24,9 +24,11 @@ public class AllergenServiceImpl implements AllergenService {
     }
 
     @Override
-    public AllergenDTO save(AllergenDTO allergenDto) {
+    public AllergenDto save(AllergenDto allergenDto) {
         Allergen entity = mapper.toEntity(allergenDto);
-        if (allergenDto.getId() != null) entity.setId(allergenDto.getId());
+        if (allergenDto.getId() != null) {
+            entity.setId(allergenDto.getId());
+        }
 
         Allergen savedEntity = allergenRepository.save(entity);
 
@@ -35,7 +37,7 @@ public class AllergenServiceImpl implements AllergenService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<AllergenDTO> findAll() {
+    public List<AllergenDto> findAll() {
         return allergenRepository.findAll().stream()
                 .map(mapper::toAllergenDto)
                 .collect(Collectors.toList());
@@ -43,7 +45,7 @@ public class AllergenServiceImpl implements AllergenService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<AllergenDTO> findById(Long id) {
+    public Optional<AllergenDto> findById(Long id) {
         return allergenRepository.findById(id)
                 .map(mapper::toAllergenDto);
     }
@@ -55,7 +57,7 @@ public class AllergenServiceImpl implements AllergenService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<AllergenDTO> findByName(String name) {
+    public Optional<AllergenDto> findByName(String name) {
         return allergenRepository.findByName(name)
                 .map(mapper::toAllergenDto);
     }

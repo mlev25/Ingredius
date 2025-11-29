@@ -1,6 +1,6 @@
 package hu.unideb.inf.ingredius.service.impl;
 
-import hu.unideb.inf.ingredius.data.dto.CategoryDTO;
+import hu.unideb.inf.ingredius.data.dto.CategoryDto;
 import hu.unideb.inf.ingredius.data.model.Category;
 import hu.unideb.inf.ingredius.data.model.util.Categories;
 import hu.unideb.inf.ingredius.data.repository.CategoryRepository;
@@ -32,7 +32,7 @@ public class CategoryServiceImplTest {
     private FoodMapper mapper;
 
     private Category testCategory;
-    private CategoryDTO testCategoryDto;
+    private CategoryDto testCategoryDto;
 
     @BeforeEach
     void setUp(){
@@ -41,7 +41,7 @@ public class CategoryServiceImplTest {
         testCategory.setName(Categories.DAIRY);
         testCategory.setDescription("Tejtermék");
 
-        testCategoryDto = new CategoryDTO();
+        testCategoryDto = new CategoryDto();
         testCategoryDto.setId(1L);
         testCategoryDto.setName(Categories.DAIRY);
         testCategoryDto.setDescription("Tejtermék");
@@ -57,7 +57,7 @@ public class CategoryServiceImplTest {
         when(mapper.toCategoryDto(testCategory)).thenReturn(testCategoryDto);
 
         // WHEN
-        CategoryDTO result = categoryService.save(testCategoryDto);
+        CategoryDto result = categoryService.save(testCategoryDto);
 
         // THEN
         assertNotNull(result);
@@ -72,7 +72,7 @@ public class CategoryServiceImplTest {
         when(mapper.toCategoryDto(testCategory)).thenReturn(testCategoryDto);
 
         // WHEN
-        Optional<CategoryDTO> result = categoryService.findById(1L);
+        Optional<CategoryDto> result = categoryService.findById(1L);
 
         // THEN
         assertTrue(result.isPresent());
@@ -85,7 +85,7 @@ public class CategoryServiceImplTest {
         when(categoryRepository.findById(99L)).thenReturn(Optional.empty());
 
         // WHEN
-        Optional<CategoryDTO> result = categoryService.findById(99L);
+        Optional<CategoryDto> result = categoryService.findById(99L);
 
         // THEN
         assertFalse(result.isPresent());
@@ -96,7 +96,7 @@ public class CategoryServiceImplTest {
     void findAll_shouldReturnListOfCategoryDtos() {
         // GIVEN
         Category anotherCategory = new Category();
-        CategoryDTO anotherCategoryDto = new CategoryDTO();
+        CategoryDto anotherCategoryDto = new CategoryDto();
 
         List<Category> categoryList = Arrays.asList(testCategory, anotherCategory);
         when(categoryRepository.findAll()).thenReturn(categoryList);
@@ -105,7 +105,7 @@ public class CategoryServiceImplTest {
         when(mapper.toCategoryDto(anotherCategory)).thenReturn(anotherCategoryDto);
 
         // WHEN
-        List<CategoryDTO> result = categoryService.findAll();
+        List<CategoryDto> result = categoryService.findAll();
 
         // THEN
         assertNotNull(result);

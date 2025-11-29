@@ -3,9 +3,9 @@ package hu.unideb.inf.ingredius.service.mapper;
 import hu.unideb.inf.ingredius.data.model.Allergen;
 import hu.unideb.inf.ingredius.data.model.Category;
 import hu.unideb.inf.ingredius.data.model.Food;
-import hu.unideb.inf.ingredius.data.dto.AllergenDTO;
-import hu.unideb.inf.ingredius.data.dto.CategoryDTO;
-import hu.unideb.inf.ingredius.data.dto.FoodDTO;
+import hu.unideb.inf.ingredius.data.dto.AllergenDto;
+import hu.unideb.inf.ingredius.data.dto.CategoryDto;
+import hu.unideb.inf.ingredius.data.dto.FoodDto;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Component
 public class FoodMapper {
 
-    public Food toEntity(FoodDTO dto, Category category, Set<Allergen> allergens) {
+    public Food toEntity(FoodDto dto, Category category, Set<Allergen> allergens) {
         Food entity = new Food();
 
         if (dto.getId() != null) {
@@ -30,7 +30,7 @@ public class FoodMapper {
         return entity;
     }
 
-    public Category toEntity(CategoryDTO dto) {
+    public Category toEntity(CategoryDto dto) {
         Category entity = new Category();
         if (dto.getId() != null) {
             entity.setId(dto.getId());
@@ -40,7 +40,7 @@ public class FoodMapper {
         return entity;
     }
 
-    public Allergen toEntity(AllergenDTO dto) {
+    public Allergen toEntity(AllergenDto dto) {
         Allergen entity = new Allergen();
         if (dto.getId() != null) {
             entity.setId(dto.getId());
@@ -50,8 +50,8 @@ public class FoodMapper {
         return entity;
     }
 
-    public FoodDTO toDto(Food entity) {
-        FoodDTO dto = new FoodDTO();
+    public FoodDto toDto(Food entity) {
+        FoodDto dto = new FoodDto();
 
         dto.setId(entity.getId());
         dto.setName(entity.getName());
@@ -75,16 +75,16 @@ public class FoodMapper {
     }
 
 
-    public AllergenDTO toAllergenDto(Allergen entity) {
-        AllergenDTO dto = new AllergenDTO();
+    public AllergenDto toAllergenDto(Allergen entity) {
+        AllergenDto dto = new AllergenDto();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setSeverity(entity.getSeverity());
         return dto;
     }
 
-    public CategoryDTO toCategoryDto(Category entity) {
-        CategoryDTO dto = new CategoryDTO();
+    public CategoryDto toCategoryDto(Category entity) {
+        CategoryDto dto = new CategoryDto();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setDescription(entity.getDescription());

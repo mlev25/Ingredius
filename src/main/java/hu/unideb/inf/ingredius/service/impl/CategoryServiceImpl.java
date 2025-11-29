@@ -1,6 +1,6 @@
 package hu.unideb.inf.ingredius.service.impl;
 
-import hu.unideb.inf.ingredius.data.dto.CategoryDTO;
+import hu.unideb.inf.ingredius.data.dto.CategoryDto;
 import hu.unideb.inf.ingredius.data.model.Category;
 import hu.unideb.inf.ingredius.data.repository.CategoryRepository;
 import hu.unideb.inf.ingredius.service.CategoryService;
@@ -25,9 +25,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO save(CategoryDTO categoryDto) {
+    public CategoryDto save(CategoryDto categoryDto) {
         Category entity = mapper.toEntity(categoryDto);
-        if (categoryDto.getId() != null) entity.setId(categoryDto.getId());
+        if (categoryDto.getId() != null) {
+            entity.setId(categoryDto.getId());
+        }
 
         Category savedEntity = categoryRepository.save(entity);
 
@@ -36,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<CategoryDTO> findAll() {
+    public List<CategoryDto> findAll() {
         return categoryRepository.findAll().stream()
                 .map(mapper::toCategoryDto)
                 .collect(Collectors.toList());
@@ -44,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<CategoryDTO> findById(Long id) {
+    public Optional<CategoryDto> findById(Long id) {
         return categoryRepository.findById(id)
                 .map(mapper::toCategoryDto);
     }
@@ -56,7 +58,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<CategoryDTO> findByName(String name) {
+    public Optional<CategoryDto> findByName(String name) {
         return categoryRepository.findByName(name)
                 .map(mapper::toCategoryDto);
     }

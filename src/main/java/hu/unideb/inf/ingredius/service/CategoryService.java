@@ -1,18 +1,18 @@
 package hu.unideb.inf.ingredius.service;
 
-import hu.unideb.inf.ingredius.data.dto.CategoryDTO;
+import hu.unideb.inf.ingredius.data.dto.CategoryDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface CategoryService {
-    CategoryDTO save(CategoryDTO categoryDTO );
+    CategoryDto save(CategoryDto categoryDto);
 
-    List<CategoryDTO> findAll();
+    List<CategoryDto> findAll();
 
-    Optional<CategoryDTO> findById(Long id);
+    Optional<CategoryDto> findById(Long id);
 
     void deleteById(Long id);
 
-    Optional<CategoryDTO> findByName(String name);
+    Optional<CategoryDto> findByName(String name);
 }

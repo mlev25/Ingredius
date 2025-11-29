@@ -1,6 +1,6 @@
 package hu.unideb.inf.ingredius.service.impl;
 
-import hu.unideb.inf.ingredius.data.dto.AllergenDTO;
+import hu.unideb.inf.ingredius.data.dto.AllergenDto;
 import hu.unideb.inf.ingredius.data.model.Allergen;
 import hu.unideb.inf.ingredius.data.model.util.Severities;
 import hu.unideb.inf.ingredius.data.repository.AllergenRepository;
@@ -32,7 +32,7 @@ public class AllergenServiceImplTest {
     private FoodMapper mapper;
 
     private Allergen testAllergen;
-    private AllergenDTO testAllergenDto;
+    private AllergenDto testAllergenDto;
 
     @BeforeEach
     void setUp() {
@@ -41,7 +41,7 @@ public class AllergenServiceImplTest {
         testAllergen.setName("Mogyoró");
         testAllergen.setSeverity(Severities.HIGH);
 
-        testAllergenDto = new AllergenDTO();
+        testAllergenDto = new AllergenDto();
         testAllergenDto.setId(1L);
         testAllergenDto.setName("Mogyoró");
         testAllergenDto.setSeverity(Severities.HIGH);
@@ -55,7 +55,7 @@ public class AllergenServiceImplTest {
         when(mapper.toAllergenDto(testAllergen)).thenReturn(testAllergenDto);
 
         // WHEN
-        AllergenDTO result = allergenService.save(testAllergenDto);
+        AllergenDto result = allergenService.save(testAllergenDto);
 
         // THEN
         assertNotNull(result);
@@ -70,7 +70,7 @@ public class AllergenServiceImplTest {
         when(mapper.toAllergenDto(testAllergen)).thenReturn(testAllergenDto);
 
         // WHEN
-        Optional<AllergenDTO> result = allergenService.findById(1L);
+        Optional<AllergenDto> result = allergenService.findById(1L);
 
         // THEN
         assertTrue(result.isPresent());
@@ -83,7 +83,7 @@ public class AllergenServiceImplTest {
         when(allergenRepository.findById(99L)).thenReturn(Optional.empty());
 
         // WHEN
-        Optional<AllergenDTO> result = allergenService.findById(99L);
+        Optional<AllergenDto> result = allergenService.findById(99L);
 
         // THEN
         assertFalse(result.isPresent());
@@ -95,7 +95,7 @@ public class AllergenServiceImplTest {
         // GIVEN
         Allergen anotherAllergen = new Allergen();
         anotherAllergen.setName("Tej");
-        AllergenDTO anotherAllergenDto = new AllergenDTO();
+        AllergenDto anotherAllergenDto = new AllergenDto();
         anotherAllergenDto.setName("Tej");
 
         List<Allergen> allergenList = Arrays.asList(testAllergen, anotherAllergen);
@@ -105,7 +105,7 @@ public class AllergenServiceImplTest {
         when(mapper.toAllergenDto(anotherAllergen)).thenReturn(anotherAllergenDto);
 
         // WHEN
-        List<AllergenDTO> result = allergenService.findAll();
+        List<AllergenDto> result = allergenService.findAll();
 
         // THEN
         assertNotNull(result);
