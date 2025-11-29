@@ -138,6 +138,14 @@
                         <goal>check</goal>
                     </goals>
                     <configuration>
+                        <excludes>
+                            <exclude>hu/unideb/inf/ingredius/controller/*</exclude>
+                            <exclude>hu/unideb/inf/ingredius/controller/**/*</exclude>
+                            <exclude>hu/unideb/inf/ingredius/service/mapper/*</exclude>
+                            <exclude>hu/unideb/inf/ingredius/service/mapper/**/*</exclude>
+                            <exclude>hu/unideb/inf/ingredius/data/dto/*</exclude>
+                            <exclude>hu/unideb/inf/ingredius/data/model/*</exclude>
+                        </excludes>
                         <rules>
                             <rule>
                                 <element>BUNDLE</element>

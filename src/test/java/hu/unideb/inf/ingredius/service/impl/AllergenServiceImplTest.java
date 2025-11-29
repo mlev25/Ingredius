@@ -112,4 +112,28 @@ public class AllergenServiceImplTest {
         assertEquals(2, result.size());
         verify(allergenRepository, times(1)).findAll();
     }
+
+    @Test
+    void save_shouldHandleNullId_forCreation() {
+        // GIVEN
+        AllergenDto createDto = new AllergenDto();
+        createDto.setName("Csoki");
+        createDto.setSeverity(Severities.LOW);
+
+        Allergen createdEntity = new Allergen();
+        createdEntity.setId(5L);
+        createdEntity.setName("Csoki");
+        createdEntity.setSeverity(Severities.LOW);
+
+        when(mapper.toEntity(createDto)).thenReturn(createdEntity);
+        when(allergenRepository.save(createdEntity)).thenReturn(createdEntity);
+        when(mapper.toAllergenDto(createdEntity)).thenReturn(testAllergenDto);
+
+        // WHEN
+        AllergenDto result = allergenService.save(createDto);
+
+        // THEN
+        assertNotNull(result);
+        verify(allergenRepository, times(1)).save(createdEntity);
+    }
 }

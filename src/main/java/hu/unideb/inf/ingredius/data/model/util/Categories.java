@@ -6,5 +6,6 @@ public enum Categories {
     VEGGIES,
     FRUITS,
     DAIRY,
-    FATS
+    FATS,
+    SPICES
 }

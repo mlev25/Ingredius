@@ -31,27 +31,24 @@ public class CategoryServiceImplTest {
     @Mock
     private FoodMapper mapper;
 
+    @Mock
     private Category testCategory;
+
     private CategoryDto testCategoryDto;
 
     @BeforeEach
     void setUp(){
-        testCategory = new Category();
-        testCategory.setId(1L);
-        testCategory.setName(Categories.DAIRY);
-        testCategory.setDescription("Tejtermék");
-
         testCategoryDto = new CategoryDto();
         testCategoryDto.setId(1L);
         testCategoryDto.setName(Categories.DAIRY);
         testCategoryDto.setDescription("Tejtermék");
     }
 
-    //---------TESZTEK--------//
-
     @Test
-    void save_shouldReturnSavedDto() {
+    void save_shouldHandleExistingId_forUpdate() {
         // GIVEN
+        doNothing().when(testCategory).setId(1L);
+
         when(mapper.toEntity(testCategoryDto)).thenReturn(testCategory);
         when(categoryRepository.save(testCategory)).thenReturn(testCategory);
         when(mapper.toCategoryDto(testCategory)).thenReturn(testCategoryDto);
@@ -63,7 +60,36 @@ public class CategoryServiceImplTest {
         assertNotNull(result);
         assertEquals(Categories.DAIRY, result.getName());
         verify(categoryRepository, times(1)).save(testCategory);
+
+        verify(testCategory, times(1)).setId(1L);
     }
+
+    @Test
+    void save_shouldHandleNullId_forCreation() {
+        // GIVEN
+        CategoryDto createDto = new CategoryDto();
+        createDto.setName(Categories.SPICES);
+        createDto.setDescription("Fűszerek");
+
+        Category createdEntityWithId = mock(Category.class);
+
+        when(mapper.toEntity(createDto)).thenReturn(testCategory);
+        when(categoryRepository.save(testCategory)).thenReturn(createdEntityWithId);
+        when(mapper.toCategoryDto(createdEntityWithId)).thenReturn(createDto);
+
+        // WHEN
+        CategoryDto result = categoryService.save(createDto);
+
+        // THEN
+        assertNotNull(result);
+        assertEquals(Categories.SPICES, result.getName());
+        verify(categoryRepository, times(1)).save(testCategory);
+
+        // Ellenőrizzük, hogy az if blokk nem futott le (branch coverage)
+        verify(testCategory, never()).setId(any());
+    }
+
+    // --- FIND MŰVELETEK ---
 
     @Test
     void findById_shouldReturnCategoryDto_whenFound() {
@@ -95,8 +121,9 @@ public class CategoryServiceImplTest {
     @Test
     void findAll_shouldReturnListOfCategoryDtos() {
         // GIVEN
-        Category anotherCategory = new Category();
+        Category anotherCategory = mock(Category.class);
         CategoryDto anotherCategoryDto = new CategoryDto();
+        anotherCategoryDto.setName(Categories.VEGGIES);
 
         List<Category> categoryList = Arrays.asList(testCategory, anotherCategory);
         when(categoryRepository.findAll()).thenReturn(categoryList);
@@ -111,6 +138,20 @@ public class CategoryServiceImplTest {
         assertNotNull(result);
         assertEquals(2, result.size());
         verify(categoryRepository, times(1)).findAll();
+    }
+
+    @Test
+    void findByName_shouldReturnCategoryDto_whenFound() {
+        // GIVEN
+        when(categoryRepository.findByName("DAIRY")).thenReturn(Optional.of(testCategory));
+        when(mapper.toCategoryDto(testCategory)).thenReturn(testCategoryDto);
+
+        // WHEN
+        Optional<CategoryDto> result = categoryService.findByName("DAIRY");
+
+        // THEN
+        assertTrue(result.isPresent());
+        assertEquals(testCategoryDto, result.get());
     }
 
     @Test
