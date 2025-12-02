@@ -8,7 +8,7 @@ TECHNICAL STACK & QUALITY ASSURANCE
 
 The application is built using a modern Java stack and enforced quality checks through CI:
 
-*   **Backend:** Spring Boot 3, Java 21, and Maven manage the application runtime and dependencies.
+*   **Backend:** Spring Boot, Java 21, and Maven manage the application runtime and dependencies.
 
 *   **Database:** **PostgreSQL** is used as the relational database, run locally via **Docker Compose** for a consistent development environment.
 
