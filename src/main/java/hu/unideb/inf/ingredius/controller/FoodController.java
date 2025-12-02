@@ -28,9 +28,13 @@ public class FoodController {
     //POST /api/foods
     @PostMapping
     public ResponseEntity<FoodDto> createFood(@Valid @RequestBody FoodDto foodDto) {
-        foodDto.setId(null);
-        FoodDto savedFood = foodService.save(foodDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedFood);
+        try {
+            foodDto.setId(null);
+            FoodDto savedFood = foodService.save(foodDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedFood);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
     // GET /api/foods
